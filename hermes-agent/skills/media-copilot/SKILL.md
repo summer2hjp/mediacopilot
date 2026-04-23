@@ -2,7 +2,7 @@
 name: media-copilot
 description: 全自动媒体下载助手 - 通过 Overseerr 调度 Radarr/Sonarr/qBittorrent/Prowlarr 实现电影电视剧的智能搜索与下载
 version: 1.0.0
-author: Your Name
+author: @Summer520
 license: MIT
 platforms: [macos, linux]
 metadata:
