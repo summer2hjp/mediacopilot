@@ -1,5 +1,7 @@
 # 🎬 Media Copilot - 全自动媒体下载助手
-
+<p align="center">
+  <img src="assets/Media-Copilot-Architecture.png" alt="Media-Copilot-Architecture." width="100%">
+</p>
 > 通过 Hermes Channels 接收消息，自动调用 Overseerr/Radarr/Sonarr/qBittorrent/Prowlarr 实现电影电视剧的智能搜索与下载
 
 ## 🎯 何时使用此技能
@@ -10,13 +12,6 @@
 - "搜索 4K 版本的《沙丘2》" / "search Dune Part Two 4K"
 - "查看下载队列" / "check download queue"
 - "暂停所有下载" / "pause all downloads"
-
-## 全自动下载链路示意图：
-
-![Media Copilot Architecture](./assets/Media-Copilot-Architecture.png)
-
-###  Overseerr页面：
-   ![Overseerr Settings](./assets/overseerr.png)
     
 ## ⚡ 快速参考
 
