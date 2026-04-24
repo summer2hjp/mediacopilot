@@ -2,10 +2,10 @@
 通过 Hermes Channels 接收消息，自动调用 Overseerr/Radarr/Sonarr/qBittorrent/Prowlarr 实现电影电视剧的智能搜索与下载
 
 <p align="center">
-  <img src="assets/Media-Copilot-Architecture.png" alt="Media-Copilot-Architecture." width="100%">
+  <img src="assets/Media-Copilot-Architecture.png" alt="Media-Copilot-Architecture" width="100%">
 </p>
 
-##📊架构数据流
+```
 用户自然语言请求
         ↓
 Hermes Agent (192.168.3.66)
@@ -62,6 +62,7 @@ Hermes Agent (192.168.3.66)
          │
          ▼
 [可选] webhook → Hermes → 用户通知
+```
 
 ## 🎯 何时使用此技能
 
@@ -97,6 +98,7 @@ X-Api-Key: YOUR_OVERSEERR_API_KEY
 # qBittorrent (先登录获取 Cookie)
 POST /api/v2/auth/login
 Cookie: SID=xxx
+```
 
 ##✨ 优化亮点总结:
 ✅ 完全合规: 遵循Hermes Skill 2.0规范hermes-agent.nousresearch.com和mintlify.com, 支持config配置注入和required_environment_variables安全声明
