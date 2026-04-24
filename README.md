@@ -11,6 +11,17 @@
 - "查看下载队列" / "check download queue"
 - "暂停所有下载" / "pause all downloads"
 
+graph LR
+    A[Telegram 消息] --> B[Hermes-Agent]
+    B --> C{加载 media-copilot skill}
+    C --> D[搜索 TMDB 获取 ID: 438631]
+    D --> E[调用 Overseerr API 提交请求]
+    E --> F{请求用户是否有 MANAGE_REQUESTS?}
+    F -->|✅ 是 | G[自动批准 → 推送 Radarr]
+    F -->|❌ 否 | H[状态: Pending → 等待管理员审核]
+    G --> I[Radarr 搜索 → qBittorrent 下载]
+    I --> J[Webhook 通知用户: 下载完成]
+    
 ## ⚡ 快速参考
 
 | 操作 | Overseerr API | Radarr API [[29]] | Sonarr API | qBittorrent API [[52]] |
