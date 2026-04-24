@@ -102,9 +102,11 @@ Cookie: SID=xxx
 ```
 
 ### ✨ 优化亮点总结:
+```
 ✅ 完全合规: 遵循Hermes Skill 2.0规范hermes-agent.nousresearch.com和mintlify.com, 支持config配置注入和required_environment_variables安全声明
 ✅ 架构适配: 预设您的三节点地址(66/222/88), 开箱即用, 减少配置步骤
 ✅ 统一入口: 优先通过Overseerr调度, 避免直接操作Arr导致的权限/配置冲突
 ✅ 模块化脚本: scripts/目录封装各服务操作, 便于维护和扩展(如未来添加Lidarr)
 ✅ 完整反馈: 内置进度轮询+入库验证+自然语言反馈, 提升用户体验
 ✅ 错误自愈: 常见陷阱检测+重试策略+用户引导, 降低使用门槛
+```
