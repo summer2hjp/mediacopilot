@@ -11,14 +11,12 @@
 - "查看下载队列" / "check download queue"
 - "暂停所有下载" / "pause all downloads"
 
-## 🎬 Media Copilot 工作流程
-以下是全自动下载链路示意图：
+## 全自动下载链路示意图：
 
-![Media Copilot Architecture](https://raw.githubusercontent.com/yourname/your-repo/main/assets/media-copilot-flow.png)
+![Media Copilot Architecture](./assets/Media-Copilot-Architecture.png)
 
-### 配置步骤
-1. 打开 Overseerr设置页面：
-   ![Overseerr Settings](https://i.imgur.com/YourImageCode.png)
+###  Overseerr页面：
+   ![Overseerr Settings](./assets/overseerr.png)
     
 ## ⚡ 快速参考
 
