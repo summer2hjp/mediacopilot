@@ -5,7 +5,7 @@
   <img src="assets/Media-Copilot-Architecture.png" alt="Media-Copilot-Architecture" width="100%">
 </p>
 
-##架构数据流
+## 📊架构数据流
 ```
 用户自然语言请求
         ↓
