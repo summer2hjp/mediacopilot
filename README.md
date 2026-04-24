@@ -5,6 +5,7 @@
   <img src="assets/Media-Copilot-Architecture.png" alt="Media-Copilot-Architecture" width="100%">
 </p>
 
+##架构数据流
 ```
 用户自然语言请求
         ↓
@@ -100,7 +101,7 @@ POST /api/v2/auth/login
 Cookie: SID=xxx
 ```
 
-##✨ 优化亮点总结:
+### ✨ 优化亮点总结:
 ✅ 完全合规: 遵循Hermes Skill 2.0规范hermes-agent.nousresearch.com和mintlify.com, 支持config配置注入和required_environment_variables安全声明
 ✅ 架构适配: 预设您的三节点地址(66/222/88), 开箱即用, 减少配置步骤
 ✅ 统一入口: 优先通过Overseerr调度, 避免直接操作Arr导致的权限/配置冲突
