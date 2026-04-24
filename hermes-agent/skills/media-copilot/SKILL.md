@@ -79,7 +79,7 @@ metadata:
       - key: media_copilot.default_quality_profile_movie-4k
         description: Radarr-4K 默认质量配置文件
         default: "Ultra-HD"
-        prompt: "请输入 Radarr-4K 默认电影质量配置名"
+        prompt: "请输入 Radarr默认电影质量配置名(如: 4K-2160p)"
       - key: media_copilot.default_quality_profile_series
         description: Sonarr 默认质量配置文件
         default: "HD-1080p"
@@ -87,7 +87,7 @@ metadata:
       - key: media_copilot.default_quality_profile_series-4k
         description: Sonarr-4K 默认质量配置文件
         default: "Ultra-HD"
-        prompt: "请输入 Sonarr-4K 默认剧集质量配置名"
+        prompt: "请输入 Sonarr默认剧集质量配置名(如: 4K-2160p)"
       - key: media_copilot.default_root_folder_movie
         description: Radarr 默认存储路径
         default: "/movies"
@@ -129,35 +129,45 @@ required_environment_variables:
 
 ## 🎯 何时使用此技能
 
-当用户通过 Hermes Channels 发送以下类型的消息时，自动加载本技能：
-- "下载电影《奥本海默》" / "add movie Oppenheimer"
-- "追剧《权力的游戏》" / "subscribe to Game of Thrones"
-- "搜索 4K 版本的《沙丘2》" / "search Dune Part Two 4K"
-- "查看下载队列" / "check download queue"
-- "暂停所有下载" / "pause all downloads"
+- 当用户通过 Hermes Channels 发送以下类型的消息包含以下意图时**自动激活**：
+
+| 用户意图 | 示例消息 |
+|---------|---------|
+| 🔍 搜索媒体 | "搜索《奥本海默》4K版本" / "find Dune Part Two 4k" |
+| ➕ 请求下载 | "下载电影《沙丘2》" / "add movie Dune: Part Two" |
+| 📺 追剧订阅 | "追《龙之家族》第二季" / "subscribe to House of the Dragon S2" |
+| 📋 查看队列 | "查看下载进度" / "check download queue" |
+| ⏸️ 下载控制 | "暂停所有下载" / "pause all downloads" |
+| ✅ 入库检查 | "《星际穿越》入库了吗？" / "is Interstellar available in Jellyfin?" |
 
 ## ⚡ 快速参考
-
-| 操作 | Overseerr API | Radarr API [[29]] | Sonarr API | qBittorrent API [[52]] |
-|------|--------------|-------------------|------------|------------------------|
-| 搜索电影 | `GET /api/v1/search` | `GET /api/v3/movie/lookup` | - | - |
-| 添加电影 | `POST /api/v1/request` | `POST /api/v3/movie` | - | - |
-| 搜索剧集 | `GET /api/v1/search` | - | `GET /api/v3/series/lookup` | - |
-| 添加剧集 | `POST /api/v1/request` | - | `POST /api/v3/series` | - |
-| 查看队列 | - | `GET /api/v3/queue` | `GET /api/v3/queue` | `GET /api/v2/torrents/info` |
-| 暂停下载 | - | - | - | `POST /api/v2/torrents/pause` |
-| 手动搜索 | - | `POST /api/v3/command` (name: `MoviesSearch`) | `POST /api/v3/command` (name: `SeriesSearch`) | `POST /api/v2/torrents/reannounce` |
+| 操作 | 服务 | 端点 | 认证方式 |
+|-----|------|-------|---------|
+| 🔍 搜索电影 | Overseerr | `GET /api/v1/search?query={q}&type=movie` | `X-Api-Key: $OVERSEERR_KEY` |
+| 🔍 搜索剧集 | Overseerr | `GET /api/v1/search?query={q}&type=tv` | `X-Api-Key: $OVERSEERR_KEY` |
+| ➕ 提交请求 | Overseerr | `POST /api/v1/request` | `X-Api-Key: $OVERSEERR_KEY` |
+| 🎬 添加电影(直连) | Radarr | `POST /api/v3/movie` | `X-Api-Key: $RADARR_KEY` |
+| 📺 添加剧集(直连) | Sonarr | `POST /api/v3/series` | `X-Api-Key: $SONARR_KEY` |
+| 🎬 添加4K电影(直连) | Radarr | `POST /api/v3/movie` | `X-Api-Key: $RADARR_KEY` |
+| 📺 添加4K剧集(直连) | Sonarr | `POST /api/v3/series` | `X-Api-Key: $SONARR_KEY` |
+| 📋 查看队列 | Radarr/Sonarr | `GET /api/v3/queue` | `X-Api-Key: $KEY` |
+| ⬇️ 获取种子列表 | qBittorrent | `GET /api/v2/torrents/info` | `Cookie: SID=$SESSION` |
+| ⏸️ 暂停下载 | qBittorrent | `POST /api/v2/torrents/pause` | `Cookie: SID=$SESSION` |
+| ✅ 验证入库 | Jellyfin | `GET /Items?SearchTerm={title}` | `X-Emby-Token: $JELLYFIN_KEY` |
 
 ### 🔐 认证方式
 
-所有 API 均使用 **Header 认证**：
-```http
-# Radarr/Sonarr/Prowlarr
-X-Api-Key: YOUR_API_KEY
+```bash
+# 🎬 Overseerr / Radarr / Sonarr / Prowlarr: Header认证
+curl -H "X-Api-Key: ${API_KEY}" "http://192.168.3.66:5055/api/v1/..."
 
-# Overseerr
-X-Api-Key: YOUR_OVERSEERR_API_KEY
+# ⬇️ qBittorrent: Cookie认证(需先登录)
+# 1. 登录获取Session
+curl -X POST "http://192.168.3.222:8080/api/v2/auth/login" \
+  -d "username=${USER}&password=${PASS}" -c cookies.txt
 
-# qBittorrent (先登录获取 Cookie)
-POST /api/v2/auth/login
-Cookie: SID=xxx
+# 2. 使用Cookie调用其他接口
+curl -b cookies.txt "http://192.168.3.222:8080/api/v2/torrents/info"
+
+# 📺 Jellyfin: Token认证
+curl -H "X-Emby-Token: ${JELLYFIN_KEY}" "http://192.168.3.88:8096/..."
