@@ -62,7 +62,7 @@ skills:
       # ======================================================================
       instances:
         # Radarr 实例配置
-        radarr_1080p:
+        radarr:
           enabled: true
           role: "primary"           # primary|secondary|specialized
           priority: 100             # 越小越优先
@@ -70,7 +70,7 @@ skills:
           timeout: 30
           verify_ssl: false         # 内网自签名证书时设为false
           
-        radarr_4k:
+        radarr-4k:
           enabled: true
           role: "specialized"       # 专用4K实例
           priority: 50              # 4K请求优先路由到此
@@ -79,7 +79,7 @@ skills:
           verify_ssl: false
           
         # Sonarr 实例配置
-        sonarr_1080p:
+        sonarr:
           enabled: true
           role: "primary"
           priority: 100
@@ -87,7 +87,7 @@ skills:
           timeout: 30
           verify_ssl: false
           
-        sonarr_4k:
+        sonarr-4k:
           enabled: true
           role: "specialized"
           priority: 50
