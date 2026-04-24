@@ -101,7 +101,8 @@ POST /api/v2/auth/login
 Cookie: SID=xxx
 ```
 
-### ✨ 优化亮点总结:
+## ✨ 优化亮点总结:
+
 ```
 ✅ 完全合规: 遵循Hermes Skill 2.0规范hermes-agent.nousresearch.com和mintlify.com, 支持config配置注入和required_environment_variables安全声明
 ✅ 架构适配: 预设您的三节点地址(66/222/88), 开箱即用, 减少配置步骤
