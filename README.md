@@ -11,16 +11,14 @@
 - "查看下载队列" / "check download queue"
 - "暂停所有下载" / "pause all downloads"
 
-graph LR
-    A[Telegram 消息] --> B[Hermes-Agent]
-    B --> C{加载 media-copilot skill}
-    C --> D[搜索 TMDB 获取 ID: 438631]
-    D --> E[调用 Overseerr API 提交请求]
-    E --> F{请求用户是否有 MANAGE_REQUESTS?}
-    F -->|✅ 是 | G[自动批准 → 推送 Radarr]
-    F -->|❌ 否 | H[状态: Pending → 等待管理员审核]
-    G --> I[Radarr 搜索 → qBittorrent 下载]
-    I --> J[Webhook 通知用户: 下载完成]
+## 🎬 Media Copilot 工作流程
+以下是全自动下载链路示意图：
+
+![Media Copilot Architecture](https://raw.githubusercontent.com/yourname/your-repo/main/assets/media-copilot-flow.png)
+
+### 配置步骤
+1. 打开 Overseerr设置页面：
+   ![Overseerr Settings](https://i.imgur.com/YourImageCode.png)
     
 ## ⚡ 快速参考
 
