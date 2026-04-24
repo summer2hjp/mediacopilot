@@ -92,10 +92,18 @@ metadata:
         description: Radarr 默认存储路径
         default: "/movies"
         prompt: "请输入 Radarr 电影默认存储路径"
+      - key: media_copilot.default_root_folder_movie_4k
+        description: Radarr-4k 默认存储路径
+        default: "/movies-4k"
+        prompt: "请输入 Radarr-4k 电影默认存储路径"
       - key: media_copilot.default_root_folder_series
         description: Sonarr 默认存储路径
         default: "/tvshows"
         prompt: "请输入 Sonarr 剧集默认存储路径"
+      - key: media_copilot.default_root_folder_series_4k
+        description: Sonarr-4k 默认存储路径
+        default: "/tvshows-4k"
+        prompt: "请输入 Sonarr-4k 剧集默认存储路径"
 required_environment_variables:
   - name: MEDIA_COPILOT_OVERSEERR_API_KEY
     prompt: "Overseerr API Key"
@@ -148,8 +156,8 @@ required_environment_variables:
 | ➕ 提交请求 | Overseerr | `POST /api/v1/request` | `X-Api-Key: $OVERSEERR_KEY` |
 | 🎬 添加电影(直连) | Radarr | `POST /api/v3/movie` | `X-Api-Key: $RADARR_KEY` |
 | 📺 添加剧集(直连) | Sonarr | `POST /api/v3/series` | `X-Api-Key: $SONARR_KEY` |
-| 🎬 添加4K电影(直连) | Radarr | `POST /api/v3/movie` | `X-Api-Key: $RADARR_KEY` |
-| 📺 添加4K剧集(直连) | Sonarr | `POST /api/v3/series` | `X-Api-Key: $SONARR_KEY` |
+| 🎬 添加4K电影(直连) | Radarr-4k | `POST /api/v3/movie` | `X-Api-Key: $RADARR_4K_KEY` |
+| 📺 添加4K剧集(直连) | Sonarr-4k | `POST /api/v3/series` | `X-Api-Key: $SONARR_4K_KEY` |
 | 📋 查看队列 | Radarr/Sonarr | `GET /api/v3/queue` | `X-Api-Key: $KEY` |
 | ⬇️ 获取种子列表 | qBittorrent | `GET /api/v2/torrents/info` | `Cookie: SID=$SESSION` |
 | ⏸️ 暂停下载 | qBittorrent | `POST /api/v2/torrents/pause` | `Cookie: SID=$SESSION` |
