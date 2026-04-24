@@ -14,31 +14,47 @@ metadata:
     config:
       - key: media_copilot.overseerr_url
         description: Overseerr 服务地址（含端口）
-        default: "http://localhost:5055"
-        prompt: "请输入 Overseerr 地址（如：http://192.168.1.100:5055）"
+        default: "http://192.168.3.66:5055"
+        prompt: "请输入 Overseerr 地址"
       - key: media_copilot.overseerr_api_key
         description: Overseerr API Key
         default: ""
         prompt: "请输入 Overseerr API Key（设置→服务→API 密钥）"
       - key: media_copilot.radarr_url
         description: Radarr 服务地址
-        default: "http://localhost:7878"
+        default: "http://192.168.3.222:7878"
         prompt: "请输入 Radarr 地址"
       - key: media_copilot.radarr_api_key
         description: Radarr API Key
         default: ""
         prompt: "请输入 Radarr API Key"
+      - key: media_copilot.radarr-4k_url
+        description: Radarr-4K 服务地址
+        default: "http://192.168.3.66:7878"
+        prompt: "请输入 Radarr-4K 地址"
+      - key: media_copilot.radarr-4k_api_key
+        description: Radarr-4K API Key
+        default: ""
+        prompt: "请输入 Radarr-4K API Key"
       - key: media_copilot.sonarr_url
         description: Sonarr 服务地址
-        default: "http://localhost:8989"
+        default: "http://192.168.3.222:8989"
         prompt: "请输入 Sonarr 地址"
       - key: media_copilot.sonarr_api_key
         description: Sonarr API Key
         default: ""
         prompt: "请输入 Sonarr API Key"
+      - key: media_copilot.sonarr-4k_url
+        description: Sonarr-4K 服务地址
+        default: "http://192.168.3.66:8989"
+        prompt: "请输入 Sonarr-4K 地址"
+      - key: media_copilot.sonarr-4k_api_key
+        description: Sonarr-4K API Key
+        default: ""
+        prompt: "请输入 Sonarr-4K API Key"
       - key: media_copilot.qbittorrent_url
         description: qBittorrent WebUI 地址
-        default: "http://localhost:8080"
+        default: "http://192.168.3.222:8080"
         prompt: "请输入 qBittorrent WebUI 地址"
       - key: media_copilot.qbittorrent_username
         description: qBittorrent 用户名
@@ -50,7 +66,7 @@ metadata:
         prompt: "请输入 qBittorrent 密码"
       - key: media_copilot.prowlarr_url
         description: Prowlarr 服务地址
-        default: "http://localhost:9696"
+        default: "http://192.168.3.222:9696"
         prompt: "请输入 Prowlarr 地址"
       - key: media_copilot.prowlarr_api_key
         description: Prowlarr API Key
@@ -60,17 +76,25 @@ metadata:
         description: Radarr 默认质量配置文件
         default: "HD-1080p"
         prompt: "请输入 Radarr 默认电影质量配置名"
+      - key: media_copilot.default_quality_profile_movie-4k
+        description: Radarr-4K 默认质量配置文件
+        default: "Ultra-HD"
+        prompt: "请输入 Radarr-4K 默认电影质量配置名"
       - key: media_copilot.default_quality_profile_series
         description: Sonarr 默认质量配置文件
         default: "HD-1080p"
         prompt: "请输入 Sonarr 默认剧集质量配置名"
+      - key: media_copilot.default_quality_profile_series-4k
+        description: Sonarr-4K 默认质量配置文件
+        default: "Ultra-HD"
+        prompt: "请输入 Sonarr-4K 默认剧集质量配置名"
       - key: media_copilot.default_root_folder_movie
         description: Radarr 默认存储路径
-        default: "/media/movies"
+        default: "/movies"
         prompt: "请输入 Radarr 电影默认存储路径"
       - key: media_copilot.default_root_folder_series
         description: Sonarr 默认存储路径
-        default: "/media/tv"
+        default: "/tvshows"
         prompt: "请输入 Sonarr 剧集默认存储路径"
 required_environment_variables:
   - name: MEDIA_COPILOT_OVERSEERR_API_KEY
@@ -81,10 +105,18 @@ required_environment_variables:
     prompt: "Radarr API Key"
     help: "在 Radarr 设置→常规→API 密钥中查看"
     required_for: "Radarr API 调用"
+  - name: MEDIA_COPILOT_RADARR_4K_API_KEY
+    prompt: "Radarr-4K API Key"
+    help: "在 Radarr-4K 设置→常规→API 密钥中查看"
+    required_for: "Radarr-4K API 调用"
   - name: MEDIA_COPILOT_SONARR_API_KEY
     prompt: "Sonarr API Key"
     help: "在 Sonarr 设置→常规→API 密钥中查看"
     required_for: "Sonarr API 调用"
+  - name: MEDIA_COPILOT_SONARR_4K_API_KEY
+    prompt: "Sonarr-4K API Key"
+    help: "在 Sonarr 设置→常规→API 密钥中查看"
+    required_for: "Sonarr-4K API 调用"
   - name: MEDIA_COPILOT_PROWLARR_API_KEY
     prompt: "Prowlarr API Key"
     help: "在 Prowlarr 设置→常规→API 密钥中查看"
