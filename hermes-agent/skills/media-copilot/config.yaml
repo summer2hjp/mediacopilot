@@ -1,0 +1,35 @@
+
+---
+
+## 🔧 config.yaml 配置模板
+
+```yaml
+# ~/.hermes/config.yaml 中的技能配置部分
+skills:
+  config:
+    media-copilot:
+      # 🎬 服务地址
+      overseerr_url: "http://192.168.3.66:5055"
+      radarr-4k_url: "http://192.168.3.66:7878"
+      sonarr-4k_url: "http://192.168.3.66:8989"
+      radarr_url: "http://192.168.3.222:7878"
+      sonarr_url: "http://192.168.3.222:8989"
+      qbittorrent_url: "http://192.168.3.222:8080"      
+      prowlarr_url: "http://192.168.3.222:9696"
+      jellyfin_url: "http://192.168.3.88:8096"
+      
+      # 🎞️ 质量配置
+      default_quality_movie: "HD-1080p"    # Radarr默认
+      default_quality_series: "HD-1080p"   # Sonarr默认
+      default_quality_movie-4k: "Ultra-HD"    # Radarr-4K默认
+      default_quality_series-4k: "Ultra-HD"   # Sonarr-4K默认
+
+      # 📁 存储路径
+      default_root_movie: "/movies"
+      default_root_series: "/tvshows"
+      
+      # ⚙️ 高级选项
+      auto_approve_requests: true          # Overseerr是否自动批准
+      notification_webhook: ""              # 完成通知webhook(可选)
+      polling_interval: 60                  # 进度轮询间隔(秒)
+      max_retries: 3                        # API请求重试次数
