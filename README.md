@@ -1,8 +1,10 @@
 # 🎬 Media Copilot - 全自动媒体下载助手
+通过 Hermes Channels 接收消息，自动调用 Overseerr/Radarr/Sonarr/qBittorrent/Prowlarr 实现电影电视剧的智能搜索与下载
+
 <p align="center">
   <img src="assets/Media-Copilot-Architecture.png" alt="Media-Copilot-Architecture." width="100%">
 </p>
-> 通过 Hermes Channels 接收消息，自动调用 Overseerr/Radarr/Sonarr/qBittorrent/Prowlarr 实现电影电视剧的智能搜索与下载
+
 
 ## 🎯 何时使用此技能
 
