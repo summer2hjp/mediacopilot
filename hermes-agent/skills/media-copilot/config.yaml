@@ -1,35 +1,138 @@
 
----
-
-## 🔧 config.yaml 配置模板
-
+# ~/.hermes/config.yaml
+# Media Copilot Skill 配置模板 (兼容 Hermes 2.0 规范)
 ```yaml
-# ~/.hermes/config.yaml 中的技能配置部分
 skills:
   config:
     media-copilot:
-      # 🎬 服务地址
+      # ======================================================================
+      # 🎬 服务地址配置 (按您的三节点架构预设)
+      # ======================================================================
+      # Overseerr (飞牛OS - 统一请求入口)
       overseerr_url: "http://192.168.3.66:5055"
-      radarr-4k_url: "http://192.168.3.66:7878"
-      sonarr-4k_url: "http://192.168.3.66:8989"
-      radarr_url: "http://192.168.3.222:7878"
-      sonarr_url: "http://192.168.3.222:8989"
-      qbittorrent_url: "http://192.168.3.222:8080"      
+      overseerr_user_id: "1"                    # Overseerr用户ID (用于提交请求)
+      overseerr_language: "zh-CN"               # 搜索语言
+      
+      # Radarr 实例 (R86S + 飞牛OS 双节点)
+      radarr_url: "http://192.168.3.222:7878"   # 标准实例 (1080p)
+      radarr_4k_url: "http://192.168.3.66:7878" # 4K实例 (飞牛OS高性能)
+      
+      # Sonarr 实例
+      sonarr_url: "http://192.168.3.222:8989"   # 标准实例
+      sonarr_4k_url: "http://192.168.3.66:8989" # 4K实例
+      
+      # 其他服务
       prowlarr_url: "http://192.168.3.222:9696"
+      qbittorrent_url: "http://192.168.3.222:8080"
       jellyfin_url: "http://192.168.3.88:8096"
       
-      # 🎞️ 质量配置
-      default_quality_movie: "HD-1080p"    # Radarr默认
-      default_quality_series: "HD-1080p"   # Sonarr默认
-      default_quality_movie-4k: "Ultra-HD"    # Radarr-4K默认
-      default_quality_series-4k: "Ultra-HD"   # Sonarr-4K默认
-
-      # 📁 存储路径
-      default_root_movie: "/movies"
-      default_root_series: "/tvshows"
+      # ======================================================================
+      # 🎞️ 质量配置 (必须与Arr内配置名称完全一致)
+      # ======================================================================
+      # 电影质量
+      default_quality_profile_movie: "HD-1080p"
+      default_quality_profile_movie_4k: "Ultra-HD"
       
-      # ⚙️ 高级选项
-      auto_approve_requests: true          # Overseerr是否自动批准
-      notification_webhook: ""              # 完成通知webhook(可选)
+      # 剧集质量
+      default_quality_profile_series: "HD-1080p"
+      default_quality_profile_series_4k: "Ultra-HD"
+      
+      # ======================================================================
+      # 📁 存储路径 (必须与Arr根目录配置一致)
+      # ======================================================================
+      default_root_folder_movie: "/movies"
+      default_root_folder_movie_4k: "/movies-4k"
+      default_root_folder_series: "/tvshows"
+      default_root_folder_series_4k: "/tvshows-4k"
+      
+      # ======================================================================
+      # 🔄 qBittorrent 分类映射 (关键: 确保下载路径与Arr匹配)
+      # ======================================================================
+      qbittorrent_category_mapping:
+        # 格式: "qb分类名": "对应的Arr根目录"
+        "movies": "/movies"
+        "movies-4k": "/movies-4k"
+        "tvshows": "/tvshows"
+        "tvshows-4k": "/tvshows-4k"
+        # 默认回退
+        "default": "/movies"
+      
+      # ======================================================================
+      # ⚙️ 实例控制 (多实例高级配置)
+      # ======================================================================
+      instances:
+        # Radarr 实例配置
+        radarr_1080p:
+          enabled: true
+          role: "primary"           # primary|secondary|specialized
+          priority: 100             # 越小越优先
+          tags: ["1080p", "hd", "web-dl"]
+          timeout: 30
+          verify_ssl: false         # 内网自签名证书时设为false
+          
+        radarr_4k:
+          enabled: true
+          role: "specialized"       # 专用4K实例
+          priority: 50              # 4K请求优先路由到此
+          tags: ["4k", "uhd", "2160p", "remux"]
+          timeout: 45               # 4K搜索可能更慢
+          verify_ssl: false
+          
+        # Sonarr 实例配置
+        sonarr_1080p:
+          enabled: true
+          role: "primary"
+          priority: 100
+          tags: ["1080p", "hd"]
+          timeout: 30
+          verify_ssl: false
+          
+        sonarr_4k:
+          enabled: true
+          role: "specialized"
+          priority: 50
+          tags: ["4k", "uhd", "2160p"]
+          timeout: 45
+          verify_ssl: false
+      
+      # ======================================================================
+      # 🎯 行为配置
+      # ======================================================================
+      # 请求处理
+      auto_approve_requests: true           # Overseerr自动批准请求
+      auto_search_on_add: true              # 添加后立即触发搜索
+      prefer_original_language: false       # 是否优先原声版本
+      
+      # 搜索配置
+      search_language: "zh-CN"              # 元数据语言
+      search_fallback_to_en: true           # 中文无结果时尝试英文
+      max_search_results: 10                # 每次搜索返回最大结果数
+      
+      # 下载监控
       polling_interval: 60                  # 进度轮询间隔(秒)
+      download_timeout_minutes: 180         # 下载超时(分钟)
+      check_jellyfin_after_download: true   # 下载完成后检查Jellyfin入库
+      
+      # 网络配置
       max_retries: 3                        # API请求重试次数
+      retry_backoff_factor: 0.5             # 指数退避系数
+      default_timeout: 30                   # 默认请求超时(秒)
+      verify_ssl_global: false              # 全局SSL验证(内网建议关闭)
+      
+      # ======================================================================
+      # 🔔 通知配置 (可选)
+      # ======================================================================
+      notification:
+        enabled: false
+        webhook_url: ""                     # 完成通知webhook
+        events: ["request_approved", "download_complete", "library_updated"]
+        include_progress: true              # 通知中包含下载进度
+      
+      # ======================================================================
+      # 🧪 调试配置 (生产环境建议关闭)
+      # ======================================================================
+      debug:
+        log_level: "INFO"                   # DEBUG|INFO|WARNING|ERROR
+        log_request_body: false             # 是否记录请求体(可能包含敏感信息)
+        log_response_body: false            # 是否记录响应体
+        dry_run: false                      # 仅模拟执行, 不实际提交请求
