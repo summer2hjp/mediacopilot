@@ -136,3 +136,4 @@ skills:
         log_request_body: false             # 是否记录请求体(可能包含敏感信息)
         log_response_body: false            # 是否记录响应体
         dry_run: false                      # 仅模拟执行, 不实际提交请求
+```
